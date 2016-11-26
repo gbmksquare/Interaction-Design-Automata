@@ -9,34 +9,35 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
   * Nginx (1.6.2)
   * uWSGI (2.0.14)
   * Python 3 (3.4.2)
+  * [Homebridge](https://github.com/nfarina/homebridge) (Optional)
 * Arduino Uno
+
+## API
+
+* `/led/on`: Turn LED on.
+* `/led/off`: Turn LED off.
+* `/led/blink/<count>`: Blink LED ` <count>` times.
+* `/motor/on`: Turn motor on.
+* `/motor/off`: Turn motor off.
+* `/motor/cw`: Rotate motor clockwise.
+* `/motor/cww`: Rotate motor counter-clockwise.
 
 ## Build
 
-* Raspberry Pi
-  * Install dependencies.
-    * `sudo apt-get update`
-    * `sudo apt-get upgrade`
-    * `sudo apt-get install nginx python3 python3-dev python3-pip`
-    * `pip3 install uwsgi flask flask-restful`
-  * Open Terminal or connect to Raspberry Pi via ssh.
-    *  `ssh pi@<address> ` (address is local address of Raspberry Pi; Make sure that both Raspberry Pi and client are on the same network.)
-    * `ssh -R 52698:localhost:52698 pi@<address>` if `rsub` is not working on Raspberry Pi.
-  * Move to home directory or any other directory.
-    * `cd ~/`
-  * Clone current repository.
-    * `git clone https://github.com/gbmksquare/Interaction-Design-Automata.git`
-  * Move to `python` directory.
-    * `cd ./python`
-  * Run python application.
-    * `uwsgi --socket 0.0.0.0:8080 --enable-threads --protocol=http --ini home.ini`
-  * Open any web browser and visit `<address>:8080` to see the application running.
-* Arduino
-  * Move to `arduino` directory.
-    * `cd ./arduino`
-  * Open `automata.ino` in Arduino IDE.
-  * Connect Arduino Uno to Raspberry Pi via USB.
-  * Verify and upload to Arduino Uno.
+1. Connect to Raspberry Pi via SSH or open Terminal.
+   * `ssh pi@<address>` or `ssh -R 52698:localhost:52698 pi@<address>` to use `rsub`.
+2. Install dependencies.
+   * `sudo apt-get update`
+   * `sudo apt-get upgrade`
+   * `sudo apt-get install arduino`
+   * `sudo apt-get install nginx python3 python3-dev python3-pip`
+   * `sudo pip3 install uwsgi flask flask-restful`
+   * To install Hombridge, go to [Wiki](https://github.com/nfarina/homebridge/wiki/Running-HomeBridge-on-a-Raspberry-Pi).
+3. Clone this repository to any directory.
+   * `git clone https://github.com/gbmksquare/Interaction-Design-Automata.git`
+4. Verify and upload `/arduino/arduino.ino` to Arduino Uno using Arduino IDE.
+5. Run `/python/home.py` and test with a web browser or Apple HomeKit (if using Homebridge).
+   * `uwsgi --socket 0.0.0.0:8080 --enable-threads --protocol=http --ini home.ini`
 
 ## License
 
