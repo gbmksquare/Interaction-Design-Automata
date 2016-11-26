@@ -45,6 +45,11 @@ class MotorOff(Resource):
 		send('motor:' + str(0))
 		return {'Off': True}, 200
 
+class MotorSpeed(Resource):
+	def get(self, speed):
+		send('motorspeed:' + str(speed))
+		return {'Speed': speed}, 200
+
 class MotorClockwise(Resource):
 	def get(self):
 		send('motorcw:' + str(1))
@@ -62,6 +67,7 @@ api.add_resource(LedOff, '/led/off')
 api.add_resource(LedBlink, '/led/blink/<count>')
 api.add_resource(MotorOn, '/motor/on')
 api.add_resource(MotorOff, '/motor/off')
+api.add_resource(MotorSpeed, '/motor/speed/<speed>')
 api.add_resource(MotorClockwise, '/motor/cw')
 api.add_resource(MotorCounterClockwise, '/motor/ccw')
 

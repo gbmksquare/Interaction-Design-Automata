@@ -1,4 +1,5 @@
 const int ledPin = 13;
+const int motorSpeedPin = 5;
 const int motorPin1 = 6;
 const int motorPin2 = 7;
 
@@ -31,6 +32,8 @@ void loop() {
       handleMotorPower(value);
     } else if (module == "motorcw") {
       handleMotorRotation(value);
+    } else if (module == "motorspeed") {
+      motorSpeed(value);
     }
   }
 }
@@ -92,6 +95,12 @@ void ledBlink(int count) {
 void motorStop() {
   digitalWrite(motorPin1, LOW);
   digitalWrite(motorPin2, LOW);
+}
+
+void motorSpeed(int value) {
+  value = map(value, 0, 100, 0, 255);
+  value = constrain(value, 0, 255);
+  analogWrite(motorSpeedPin, value);
 }
 
 void motorRotateClockwise() {

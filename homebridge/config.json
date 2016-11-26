@@ -11,21 +11,28 @@
 	"accessories": [
 		{
 			"accessory": "Http",
-			"name": "Arduino LED",
+			"service": "Light",
+			"name": "LED",
 			"on_url": "http://192.168.0.45:8080/led/on",
 			"off_url": "http://192.168.0.45:8080/led/off",
 			"http_method": "GET"
 		},
 		{
 			"accessory": "Http",
-			"name": "Arduino Motor",
+			"service": "Light",
+			"name": "Motor",
 			"on_url": "http://192.168.0.45:8080/motor/on",
 			"off_url": "http://192.168.0.45:8080/motor/off",
+			"switchHandling": "realtime",
+			"brightnessHandling": "yes",
+			"brightness_url": "http://192.168.0.45:8080/motor/speed/%b",
+			"brightnesslvl_url":  "",
 			"http_method": "GET"
 		},
 		{
 			"accessory": "Http",
-			"name": "Arduino Motor direction",
+			"service": "Switch",
+			"name": "Motor direction",
 			"on_url": "http://192.168.0.45:8080/motor/cw",
 			"off_url": "http://192.168.0.45:8080/motor/ccw",
 			"http_method": "GET"
