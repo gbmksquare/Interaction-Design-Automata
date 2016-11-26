@@ -19,6 +19,7 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
 * `/led/blink/<count>`: Blink LED ` <count>` times.
 * `/motor/on`: Turn motor on.
 * `/motor/off`: Turn motor off.
+* `/motor/speed/<speed>`: Change motor speed. `<value` is a range between 0 and 100.
 * `/motor/cw`: Rotate motor clockwise.
 * `/motor/cww`: Rotate motor counter-clockwise.
 
@@ -57,8 +58,8 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
    * `cd ~/.homebridge`
 
 
-   * `ln -s <path_to_project>/homebridge/config.json config.json`
-   * `homebridge`
+* `ln -s <path_to_project>/homebridge/config.json config.json`
+* `homebridge`
 
 ## License
 
