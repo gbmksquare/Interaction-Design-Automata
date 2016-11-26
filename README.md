@@ -26,18 +26,39 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
 
 1. Connect to Raspberry Pi via SSH or open Terminal.
    * `ssh pi@<address>` or `ssh -R 52698:localhost:52698 pi@<address>` to use `rsub`.
+
 2. Install dependencies.
    * `sudo apt-get update`
    * `sudo apt-get upgrade`
    * `sudo apt-get install arduino`
    * `sudo apt-get install nginx python3 python3-dev python3-pip`
    * `sudo pip3 install uwsgi flask flask-restful`
-   * To install Hombridge, go to [Wiki](https://github.com/nfarina/homebridge/wiki/Running-HomeBridge-on-a-Raspberry-Pi).
+   * To install Hombridge, go to [Wiki](https://github.com/nfarina/homebridge/wiki/Running-HomeBridge-on-a-Raspberry-Pi). (Optional)
+     * `curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -`
+     * ``sudo apt-get install -y nodejs`
+     * `sudo apt-get install libavahi-compat-libdnssd-dev`
+     * `sudo npm install -g --unsafe-perm homebridge hap-nodejs node-gyp`
+     * `cd /usr/lib/node_modules/homebridge/`
+     * `sudo npm install --unsafe-perm bignum`
+     * `cd /usr/lib/node_modules/hap-nodejs/node_modules/mdns`
+     * `sudo node-gyp BUILDTYPE=Release rebuild`
+     * `npm install -g homebridge-http`
+
 3. Clone this repository to any directory.
    * `git clone https://github.com/gbmksquare/Interaction-Design-Automata.git`
+
 4. Verify and upload `/arduino/arduino.ino` to Arduino Uno using Arduino IDE.
+
 5. Run `/python/home.py` and test with a web browser or Apple HomeKit (if using Homebridge).
    * `uwsgi --socket 0.0.0.0:8080 --enable-threads --protocol=http --ini home.ini`
+
+6. Make a symbolic link to Homebridge configuration file and run Homebridge. (Optional)
+
+   * `cd ~/.homebridge`
+
+
+   * `ln -s <path_to_project>/homebridge/config.json config.json`
+   * `homebridge`
 
 ## License
 
