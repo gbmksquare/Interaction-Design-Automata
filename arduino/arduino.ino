@@ -4,6 +4,8 @@ const int motorPin2 = 7;
 
 const int blinkDelay = 300;
 
+bool isMotorClockwise = true;
+
 void setup() {
   // Setup
   pinMode(ledPin, OUTPUT);
@@ -22,33 +24,71 @@ void loop() {
     // Serial.println(value);
 
     if (module == "led") {
-      blink(value);
+      handleLed(value);
+    } else if (module == "ledblink") {
+      ledBlink(value);
     } else if (module == "motor") {
-      rotate(value);
+      handleMotorPower(value);
+    } else if (module == "motorcw") {
+      handleMotorRotation(value);
     }
   }
 }
 
-void blink(int count) {
+// Hanlder
+void handleLed(int value) {
+  if (value == 1) {
+    ledOn();
+  } else if (value == 0) {
+    ledOff();
+  }
+}
+
+void handleMotorPower(int value) {
+  if (value == 1) {
+    if (isMotorClockwise == true) {
+      motorRotateClockwise();  
+    } else {
+      motorRotateCounterClockwise();
+    }
+  } else if (value == 0) {
+    motorStop();
+  }
+}
+
+void handleMotorRotation(int value) {
+  if (value == 1) {
+    motorRotateClockwise();
+    isMotorClockwise = true;
+  } else if (value == 0) {
+    motorRotateCounterClockwise();
+    isMotorClockwise = false;
+  }
+}
+
+// LED
+void ledOn() {
+  digitalWrite(ledPin, HIGH);
+}
+
+void ledOff() {
+  digitalWrite(ledPin, LOW);
+}
+
+void ledBlink(int count) {
+  int originalStatus = digitalRead(ledPin);
+  int newStatus = (originalStatus == LOW) ? HIGH : LOW;
+
   for (int i = 0; i < count; i++) {
-    digitalWrite(ledPin, HIGH);
+    digitalWrite(ledPin, originalStatus);
     delay(blinkDelay);
-    digitalWrite(ledPin, LOW);
+    digitalWrite(ledPin, newStatus);
     delay(blinkDelay);
   }
+  digitalWrite(ledPin, originalStatus);
 }
 
 // Motor
-void rotate(int mode) {
-  if (mode == 0) {
-    motorStop();
-  } else if (mode == 1) {
-    motorRotateClockwise();
-  } else if (mode == -1) {
-    motorRotateCounterClockwise();
-  }
-}
-
 void motorStop() {
   digitalWrite(motorPin1, LOW);
   digitalWrite(motorPin2, LOW);
