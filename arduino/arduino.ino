@@ -7,7 +7,7 @@ const int motorSpeedPin = 5;    // Analog
 const int motorControl1Pin = 6; // Analog
 const int motorControl2Pin = 7; // Digital
 
-const int blinkDelay = 300;
+const int defaultBlinkDelay = 300;
 
 bool isMotorClockwise = true;
 
@@ -19,7 +19,7 @@ void setup() {
   pinMode(motorSpeedPin, OUTPUT);
   pinMode(motorControl1Pin, OUTPUT);
   pinMode(motorControl2Pin, OUTPUT);
-  blinkLed(indicatorLedPin, 3);
+  blinkLed(indicatorLedPin, 5, 100);
 }
 
 void loop() {
@@ -36,10 +36,12 @@ void loop() {
 
 // Hanlder
 void handle(String module, int value) {
+  blinkLed(indicatorLedPin, 2, 100);
+
   if (module == "led") {
     handleLedOnOff(redLedPin, value);
   } else if (module == "ledblink") {
-    blinkLed(redLedPin, value);
+    blinkLed(redLedPin, value, defaultBlinkDelay);
   } else if (module == "ledbrightness") {
     setLedBrightness(redLedPin, value);
   } 
@@ -47,7 +49,7 @@ void handle(String module, int value) {
   else if (module == "indicator") {
     handleLedOnOff(indicatorLedPin, value);
   } else if (module == "indicatorblink") {
-    blinkLed(indicatorLedPin, value);
+    blinkLed(indicatorLedPin, value, defaultBlinkDelay);
   }
 
   else if (module == "motor") {
@@ -59,7 +61,7 @@ void handle(String module, int value) {
   } 
 
   else if (module == "heartbeat") {
-    fadeInOutLed(redLedPin, value);
+    heartbeatLed(redLedPin, value);
   }
 }
 
@@ -108,7 +110,7 @@ void setLedBrightness(int ledPin, int brightness) {
   analogWrite(ledPin, brightness);
 }
 
-void fadeInOutLed(int ledPin, int bpm) {
+void heartbeatLed(int ledPin, int bpm) {
   bpm = bpm / 2;
 
   unsigned int millisecInMinute = 1 * 60 * 1000;
@@ -129,27 +131,31 @@ void fadeInOutLed(int ledPin, int bpm) {
   }
   
   for (int n = 0; n < 3; n++) {
-    for (int i = 0; i <= 255; i++) {
-      analogWrite(ledPin, i);
-      delay(delayPerLoop);
-    }
-    for (int i = 255; i >= 0; i--) {
-      analogWrite(ledPin, i);
-      delay(delayPerLoop);
-    }
+    fadeInOutLed(ledPin, delayPerLoop);
     delay(offBeat);
   }
 }
 
-void blinkLed(int ledPin, int count) {
+void fadeInOutLed(int ledPin, int transitionDelay) {
+  for (int brightness = 0; brightness <= 255; brightness += 1) {
+    analogWrite(ledPin, brightness);
+    delay(transitionDelay);
+  }
+  for (int brightness = 255; brightness >= 0; brightness -= 1) {
+    analogWrite(ledPin, brightness);
+    delay(transitionDelay);
+  }
+}
+
+void blinkLed(int ledPin, int count, int delay) {
   int originalStatus = digitalRead(ledPin);
   int newStatus = (originalStatus == OFF) ? ON : OFF;
 
   for (int i = 0; i < count; i++) {
     digitalWrite(ledPin, originalStatus);
-    delay(blinkDelay);
+    delay(delay);
     digitalWrite(ledPin, newStatus);
-    delay(blinkDelay);
+    delay(delay);
   }
   digitalWrite(ledPin, originalStatus);
 }
