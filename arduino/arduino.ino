@@ -13,8 +13,10 @@ bool isMotorClockwise = true;
 
 bool isHeartbeatOn = false;
 bool currentBpm = 0;
-int heratbeatTransitionDelay = 0;
+int heartbeatTransitionDelay = 0;
 int heartbeatOffDelay = 0;
+int heartbeatCurrentBrightness = 0;
+int isHeartbeatBrightnessAscending = true;
 
 // Run loop
 void setup() {
@@ -67,7 +69,12 @@ void handle(String module, int value) {
   } 
 
   else if (module == "heartbeat") {
-    heartbeatLed(redLedPin, value);
+    setHeartbeat(value);
+    if (value > 0) {
+      turnOnHearbeat();
+    } else {
+      turnOffHeartbeat();
+    }
   }
 }
 
@@ -116,15 +123,15 @@ void setLedBrightness(int ledPin, int brightness) {
   analogWrite(ledPin, brightness);
 }
 
-void blinkLed(int ledPin, int count, int delay) {
+void blinkLed(int ledPin, int count, int blinkDelay) {
   int originalStatus = digitalRead(ledPin);
   int newStatus = (originalStatus == OFF) ? ON : OFF;
 
   for (int i = 0; i < count; i++) {
     digitalWrite(ledPin, originalStatus);
-    delay(delay);
+    delay(blinkDelay);
     digitalWrite(ledPin, newStatus);
-    delay(delay);
+    delay(blinkDelay);
   }
   digitalWrite(ledPin, originalStatus);
 }
@@ -165,47 +172,56 @@ void motorRotateCounterClockwise() {
 // Application
 void turnOnHearbeat() {
   isHeartbeatOn = true;
-
-  // TODO: Calculate delays
 }
 
 void turnOffHeartbeat() {
-  isHeartbeatOn = true;
+  turnOffLed(redLedPin);
+  isHeartbeatOn = false;
   currentBpm = 0;
 }
 
 void setHeartbeat(int bpm) {
+  if (bpm <= 0) {
+    return;
+  }
+
   currentBpm = bpm;
+
+  bpm = bpm / 2;
+  unsigned int millisecondPerMinute = 1 * 60 * 1000;
+  unsigned int millisecondPerBeat = millisecondPerMinute / bpm;
+
+  if (bpm >= 100) {
+    double onDelay = millisecondPerBeat / 8 * 7;
+    heartbeatOffDelay = millisecondPerBeat / 8;
+    heartbeatTransitionDelay = ceil(onDelay / (256 * 2));
+    heartbeatTransitionDelay = heartbeatTransitionDelay - 1;
+  } else {
+    double onDelay = millisecondPerBeat / 4 * 3;
+    heartbeatOffDelay = millisecondPerBeat / 4;
+    heartbeatTransitionDelay = ceil(onDelay / (256 * 2));
+  }
 }
 
 void asyncHeartbeat() {
   if (isHeartbeatOn == true) {
-    // TODO: compose for loop
-  }
-}
 
-void heartbeatLed(int ledPin, int bpm) {
-  bpm = bpm / 2;
+    if (isHeartbeatBrightnessAscending == true) {
+      analogWrite(redLedPin, heartbeatCurrentBrightness);
 
-  unsigned int millisecInMinute = 1 * 60 * 1000;
-  unsigned int millisecPerBeat = millisecInMinute / bpm;
+      heartbeatCurrentBrightness += 1;
+      if (heartbeatCurrentBrightness > 255) {
+        isHeartbeatBrightnessAscending = false;
+      }
+    } else {
+      analogWrite(redLedPin, heartbeatCurrentBrightness);
 
-  int offBeat = 0;
-  int delayPerLoop = 0;
-
-  if (bpm >= 100) {
-    double onBeat = millisecPerBeat / 8 * 7;
-    offBeat = millisecPerBeat / 8;
-    delayPerLoop = ceil(onBeat / (256 * 2));
-    delayPerLoop = delayPerLoop - 1;
-  } else {
-    double onBeat = millisecPerBeat / 4 * 3;
-    offBeat = millisecPerBeat / 4;
-    delayPerLoop = ceil(onBeat / (256 * 2));
-  }
-  
-  for (int n = 0; n < 3; n++) {
-    fadeInOutLed(ledPin, delayPerLoop);
-    delay(offBeat);
+      heartbeatCurrentBrightness -= 1;
+      if (heartbeatCurrentBrightness < 0) {
+        delay(heartbeatOffDelay);
+        isHeartbeatBrightnessAscending = true;
+      }
+    }
+    delay(heartbeatTransitionDelay);
   }
 }
