@@ -15,10 +15,7 @@ def send(value):
 # Web
 class Welcome(Resource):
 	def get(self):
-		return {'Home': 'Welcome!',
-				'API': {'LED': '/led/:count',
-						'Motor': '/motor/:mode (-1: CCW, 0: Stop, 1: CW'}
-				}, 200
+		return {'Home': 'Welcome!'}, 200
 
 class LedOn(Resource):
 	def get(self):
@@ -33,6 +30,21 @@ class LedOff(Resource):
 class LedBlink(Resource):
 	def get(self, count):
 		send('ledblink:' + str(count))
+		return {'Blink': count}, 200
+
+class IndicatorOn(Resource):
+	def get(self):
+		send('indicator:' + str(1))
+		return {'On': True}, 200
+
+class IndicatorOff(Resource):
+	def get(self):
+		send('indicator:' + str(0))
+		return {'Off': True}, 200
+
+class IndicatorBlink(Resource):
+	def get(self, count):
+		send('indicatorblink:' + str(count))
 		return {'Blink': count}, 200
 
 class MotorOn(Resource):
@@ -65,6 +77,9 @@ api.add_resource(Welcome, '/')
 api.add_resource(LedOn, '/led/on')
 api.add_resource(LedOff, '/led/off')
 api.add_resource(LedBlink, '/led/blink/<count>')
+api.add_resource(IndicatorOn, '/indicator/on')
+api.add_resource(IndicatorOff, '/indicator/off')
+api.add_resource(IndicatorBlink, '/indicator/blink/<count>')
 api.add_resource(MotorOn, '/motor/on')
 api.add_resource(MotorOff, '/motor/off')
 api.add_resource(MotorSpeed, '/motor/speed/<speed>')

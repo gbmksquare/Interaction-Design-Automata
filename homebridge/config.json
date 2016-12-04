@@ -12,9 +12,17 @@
 		{
 			"accessory": "Http",
 			"service": "Light",
-			"name": "LED",
+			"name": "Heart",
 			"on_url": "http://192.168.0.45:8080/led/on",
 			"off_url": "http://192.168.0.45:8080/led/off",
+			"http_method": "GET"
+		},
+		{
+			"accessory": "Http",
+			"service": "Light",
+			"name": "Indicator",
+			"on_url": "http://192.168.0.45:8080/indicator/on",
+			"off_url": "http://192.168.0.45:8080/indicator/off",
 			"http_method": "GET"
 		},
 		{
