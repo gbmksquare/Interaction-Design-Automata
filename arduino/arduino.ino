@@ -41,6 +41,8 @@ void handle(String module, int value) {
     handleLed(redLedPin, value);
   } else if (module == "ledblink") {
     blinkLed(redLedPin, value);
+  } else if (module == "ledbrightness") {
+    setLedBrightness(redLedPin, value);
   } else if (module == "indicator") {
     handleLed(indicatorLedPin, value);
   } else if (module == "indicatorblink") {
@@ -51,6 +53,8 @@ void handle(String module, int value) {
     handleMotorRotation(value);
   } else if (module == "motorspeed") {
     motorSpeed(value);
+  } else if (module == "heartbeat") {
+    fadeInOutLed(redLedPin, value);
   }
 }
 
@@ -91,6 +95,45 @@ void turnOnLed(int ledPin) {
 
 void turnOffLed(int ledPin) {
   digitalWrite(ledPin, OFF);
+}
+
+void setLedBrightness(int ledPin, int brightness) {
+  brightness = map(brightness, 0, 100, 0, 255);
+  brightness = constrain(brightness, 0, 255);
+  analogWrite(ledPin, brightness);
+}
+
+void fadeInOutLed(int ledPin, int bpm) {
+  bpm = bpm / 2;
+
+  unsigned int millisecInMinute = 1 * 60 * 1000;
+  unsigned int millisecPerBeat = millisecInMinute / bpm;
+
+  int offBeat = 0;
+  int delayPerLoop = 0;
+
+  if (bpm >= 100) {
+    double onBeat = millisecPerBeat / 8 * 7;
+    offBeat = millisecPerBeat / 8;
+    delayPerLoop = ceil(onBeat / (256 * 2));
+    delayPerLoop = delayPerLoop - 1;
+  } else {
+    double onBeat = millisecPerBeat / 4 * 3;
+    offBeat = millisecPerBeat / 4;
+    delayPerLoop = ceil(onBeat / (256 * 2));
+  }
+  
+  for (int n = 0; n < 3; n++) {
+    for (int i = 0; i <= 255; i++) {
+      analogWrite(ledPin, i);
+      delay(delayPerLoop);
+    }
+    for (int i = 255; i >= 0; i--) {
+      analogWrite(ledPin, i);
+      delay(delayPerLoop);
+    }
+    delay(offBeat);
+  }
 }
 
 void blinkLed(int ledPin, int count) {

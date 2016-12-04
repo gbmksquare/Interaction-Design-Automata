@@ -32,6 +32,11 @@ class LedBlink(Resource):
 		send('ledblink:' + str(count))
 		return {'Blink': count}, 200
 
+class LedBrightness(Resource):
+	def get(self, brightness):
+		send('ledbrightness:' + str(brightness))
+		return {'Brightness': brightness}, 200
+
 class IndicatorOn(Resource):
 	def get(self):
 		send('indicator:' + str(1))
@@ -72,11 +77,17 @@ class MotorCounterClockwise(Resource):
 		send('motorcw:' + str(0))
 		return {'Clockwise': False}, 200
 
+class Heartbeat(Resource):
+	def get(self, bpm):
+		send('heartbeat:' + str(bpm))
+		return {'Heartbeat': bpm}, 200
+
 # API
 api.add_resource(Welcome, '/')
 api.add_resource(LedOn, '/led/on')
 api.add_resource(LedOff, '/led/off')
 api.add_resource(LedBlink, '/led/blink/<count>')
+api.add_resource(LedBrightness, '/led/brightness/<brightness>')
 api.add_resource(IndicatorOn, '/indicator/on')
 api.add_resource(IndicatorOff, '/indicator/off')
 api.add_resource(IndicatorBlink, '/indicator/blink/<count>')
@@ -85,6 +96,8 @@ api.add_resource(MotorOff, '/motor/off')
 api.add_resource(MotorSpeed, '/motor/speed/<speed>')
 api.add_resource(MotorClockwise, '/motor/cw')
 api.add_resource(MotorCounterClockwise, '/motor/ccw')
+
+api.add_resource(Heartbeat, '/heartbeat/<bpm>')
 
 # Start app
 if __name__ == "__main__":
