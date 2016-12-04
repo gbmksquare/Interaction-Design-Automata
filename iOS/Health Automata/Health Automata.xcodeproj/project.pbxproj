@@ -13,6 +13,11 @@
 		161458871DF44E23006F24E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 161458851DF44E23006F24E3 /* LaunchScreen.storyboard */; };
 		161458931DF452FA006F24E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 161458921DF452FA006F24E3 /* InfoPlist.strings */; };
 		161458991DF453B9006F24E3 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161458981DF453B9006F24E3 /* HealthKit.framework */; };
+		16633A5B1DF45E0300BC7355 /* StepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A5A1DF45E0300BC7355 /* StepViewController.swift */; };
+		16633A5D1DF45E0C00BC7355 /* HeartbeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A5C1DF45E0C00BC7355 /* HeartbeatViewController.swift */; };
+		16633A5F1DF45E1300BC7355 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A5E1DF45E1300BC7355 /* DebugViewController.swift */; };
+		16633A621DF46C5C00BC7355 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A611DF46C5C00BC7355 /* DateFormatter.swift */; };
+		16633A641DF46C8800BC7355 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A631DF46C8800BC7355 /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +30,11 @@
 		161458921DF452FA006F24E3 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		161458941DF4539C006F24E3 /* Health Automata.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Health Automata.entitlements"; sourceTree = "<group>"; };
 		161458981DF453B9006F24E3 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		16633A5A1DF45E0300BC7355 /* StepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepViewController.swift; sourceTree = "<group>"; };
+		16633A5C1DF45E0C00BC7355 /* HeartbeatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartbeatViewController.swift; sourceTree = "<group>"; };
+		16633A5E1DF45E1300BC7355 /* DebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
+		16633A611DF46C5C00BC7355 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		16633A631DF46C8800BC7355 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +72,7 @@
 				1614588E1DF44E72006F24E3 /* Application */,
 				1614588F1DF44E7C006F24E3 /* User Interface */,
 				161458911DF44E91006F24E3 /* View Controller */,
+				16633A601DF46C5100BC7355 /* Extension */,
 				161458901DF44E83006F24E3 /* Resource */,
 			);
 			path = "Health Automata";
@@ -98,6 +109,9 @@
 		161458911DF44E91006F24E3 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				16633A5A1DF45E0300BC7355 /* StepViewController.swift */,
+				16633A5C1DF45E0C00BC7355 /* HeartbeatViewController.swift */,
+				16633A5E1DF45E1300BC7355 /* DebugViewController.swift */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -108,6 +122,15 @@
 				161458981DF453B9006F24E3 /* HealthKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		16633A601DF46C5100BC7355 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				16633A631DF46C8800BC7355 /* UIColor.swift */,
+				16633A611DF46C5C00BC7355 /* DateFormatter.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,7 +215,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16633A5B1DF45E0300BC7355 /* StepViewController.swift in Sources */,
+				16633A641DF46C8800BC7355 /* UIColor.swift in Sources */,
+				16633A5D1DF45E0C00BC7355 /* HeartbeatViewController.swift in Sources */,
+				16633A5F1DF45E1300BC7355 /* DebugViewController.swift in Sources */,
 				1614587D1DF44E23006F24E3 /* AppDelegate.swift in Sources */,
+				16633A621DF46C5C00BC7355 /* DateFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +384,7 @@
 				1614588D1DF44E23006F24E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
