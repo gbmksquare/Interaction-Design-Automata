@@ -26,7 +26,7 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
 * `/motor/speed/<speed>`: Change motor speed. `<value` is a range between 0 and 100.
 * `/motor/cw`: Rotate motor clockwise.
 * `/motor/ccw`: Rotate motor counter-clockwise.
-* `/heartbeat/<bmp>`: Pulse red LED.
+* `/heartbeat/<bmp>`: Change pulse of red LED. 0 to stop.
 
 ## Build
 
