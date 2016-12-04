@@ -11,6 +11,11 @@ const int defaultBlinkDelay = 300;
 
 bool isMotorClockwise = true;
 
+bool isHeartbeatOn = false;
+bool currentBpm = 0;
+int heratbeatTransitionDelay = 0;
+int heartbeatOffDelay = 0;
+
 // Run loop
 void setup() {
   Serial.begin(9600);
@@ -32,6 +37,7 @@ void loop() {
     // Serial.println(module);
     // Serial.println(value);
   }
+  asyncHeartbeat();
 }
 
 // Hanlder
@@ -110,6 +116,74 @@ void setLedBrightness(int ledPin, int brightness) {
   analogWrite(ledPin, brightness);
 }
 
+void blinkLed(int ledPin, int count, int delay) {
+  int originalStatus = digitalRead(ledPin);
+  int newStatus = (originalStatus == OFF) ? ON : OFF;
+
+  for (int i = 0; i < count; i++) {
+    digitalWrite(ledPin, originalStatus);
+    delay(delay);
+    digitalWrite(ledPin, newStatus);
+    delay(delay);
+  }
+  digitalWrite(ledPin, originalStatus);
+}
+
+void fadeInOutLed(int ledPin, int transitionDelay) {
+  for (int brightness = 0; brightness <= 255; brightness += 1) {
+    analogWrite(ledPin, brightness);
+    delay(transitionDelay);
+  }
+  for (int brightness = 255; brightness >= 0; brightness -= 1) {
+    analogWrite(ledPin, brightness);
+    delay(transitionDelay);
+  }
+}
+
+// Motor
+void motorStop() {
+  digitalWrite(motorControl1Pin, OFF);
+  digitalWrite(motorControl2Pin, OFF);
+}
+
+void motorSpeed(int value) {
+  value = map(value, 0, 100, 0, 255);
+  value = constrain(value, 0, 255);
+  analogWrite(motorSpeedPin, value);
+}
+
+void motorRotateClockwise() {
+  digitalWrite(motorControl1Pin, OFF);
+  digitalWrite(motorControl2Pin, ON);
+}
+
+void motorRotateCounterClockwise() {
+  digitalWrite(motorControl1Pin, ON);
+  digitalWrite(motorControl2Pin, OFF);
+}
+
+// Application
+void turnOnHearbeat() {
+  isHeartbeatOn = true;
+
+  // TODO: Calculate delays
+}
+
+void turnOffHeartbeat() {
+  isHeartbeatOn = true;
+  currentBpm = 0;
+}
+
+void setHeartbeat(int bpm) {
+  currentBpm = bpm;
+}
+
+void asyncHeartbeat() {
+  if (isHeartbeatOn == true) {
+    // TODO: compose for loop
+  }
+}
+
 void heartbeatLed(int ledPin, int bpm) {
   bpm = bpm / 2;
 
@@ -134,50 +208,4 @@ void heartbeatLed(int ledPin, int bpm) {
     fadeInOutLed(ledPin, delayPerLoop);
     delay(offBeat);
   }
-}
-
-void fadeInOutLed(int ledPin, int transitionDelay) {
-  for (int brightness = 0; brightness <= 255; brightness += 1) {
-    analogWrite(ledPin, brightness);
-    delay(transitionDelay);
-  }
-  for (int brightness = 255; brightness >= 0; brightness -= 1) {
-    analogWrite(ledPin, brightness);
-    delay(transitionDelay);
-  }
-}
-
-void blinkLed(int ledPin, int count, int delay) {
-  int originalStatus = digitalRead(ledPin);
-  int newStatus = (originalStatus == OFF) ? ON : OFF;
-
-  for (int i = 0; i < count; i++) {
-    digitalWrite(ledPin, originalStatus);
-    delay(delay);
-    digitalWrite(ledPin, newStatus);
-    delay(delay);
-  }
-  digitalWrite(ledPin, originalStatus);
-}
-
-// Motor
-void motorStop() {
-  digitalWrite(motorControl1Pin, OFF);
-  digitalWrite(motorControl2Pin, OFF);
-}
-
-void motorSpeed(int value) {
-  value = map(value, 0, 100, 0, 255);
-  value = constrain(value, 0, 255);
-  analogWrite(motorSpeedPin, value);
-}
-
-void motorRotateClockwise() {
-  digitalWrite(motorControl1Pin, OFF);
-  digitalWrite(motorControl2Pin, ON);
-}
-
-void motorRotateCounterClockwise() {
-  digitalWrite(motorControl1Pin, ON);
-  digitalWrite(motorControl2Pin, OFF);
 }
