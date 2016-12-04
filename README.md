@@ -14,9 +14,12 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
 
 ## API
 
-* `/led/on`: Turn LED on.
-* `/led/off`: Turn LED off.
-* `/led/blink/<count>`: Blink LED ` <count>` times.
+* `/led/on`: Turn red LED on.
+* `/led/off`: Turn red LED off.
+* `/led/blink/<count>`: Blink red LED ` <count>` times.
+* `/indicator/on`: Turn indicator LED on.
+* `/indicator/off`: Turn indicator LED off.
+* `/indicator/blink/<count>`: Blink indicator LED ` <count>` times.
 * `/motor/on`: Turn motor on.
 * `/motor/off`: Turn motor off.
 * `/motor/speed/<speed>`: Change motor speed. `<value` is a range between 0 and 100.
