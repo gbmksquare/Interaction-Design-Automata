@@ -11,54 +11,59 @@ const int blinkDelay = 300;
 
 bool isMotorClockwise = true;
 
+// Run loop
 void setup() {
-  // Setup
+  Serial.begin(9600);
   pinMode(indicatorLedPin, OUTPUT);
   pinMode(redLedPin, OUTPUT);
   pinMode(motorSpeedPin, OUTPUT);
   pinMode(motorControl1Pin, OUTPUT);
   pinMode(motorControl2Pin, OUTPUT);
-  Serial.begin(9600);
   blinkLed(indicatorLedPin, 3);
 }
 
 void loop() {
   if (Serial.available() > 0) {
     String module = Serial.readStringUntil(':');
-    Serial.read();
+    Serial.read(); // Skip ':'
     int value = Serial.readStringUntil('\n').toInt();
+    handle(module, value);
 
     // Serial.println(module);
     // Serial.println(value);
-
-    handle(module, value);
   }
 }
 
 // Hanlder
 void handle(String module, int value) {
   if (module == "led") {
-    handleLed(redLedPin, value);
+    handleLedOnOff(redLedPin, value);
   } else if (module == "ledblink") {
     blinkLed(redLedPin, value);
   } else if (module == "ledbrightness") {
     setLedBrightness(redLedPin, value);
-  } else if (module == "indicator") {
-    handleLed(indicatorLedPin, value);
+  } 
+
+  else if (module == "indicator") {
+    handleLedOnOff(indicatorLedPin, value);
   } else if (module == "indicatorblink") {
     blinkLed(indicatorLedPin, value);
-  } else if (module == "motor") {
+  }
+
+  else if (module == "motor") {
     handleMotorPower(value);
   } else if (module == "motorcw") {
     handleMotorRotation(value);
   } else if (module == "motorspeed") {
     motorSpeed(value);
-  } else if (module == "heartbeat") {
+  } 
+
+  else if (module == "heartbeat") {
     fadeInOutLed(redLedPin, value);
   }
 }
 
-void handleLed(int ledPin, int value) {
+void handleLedOnOff(int ledPin, int value) {
   if (value == 1) {
     turnOnLed(ledPin);
   } else if (value == 0) {
@@ -151,8 +156,8 @@ void blinkLed(int ledPin, int count) {
 
 // Motor
 void motorStop() {
-  digitalWrite(motorControl1Pin, LOW);
-  digitalWrite(motorControl2Pin, LOW);
+  digitalWrite(motorControl1Pin, OFF);
+  digitalWrite(motorControl2Pin, OFF);
 }
 
 void motorSpeed(int value) {
@@ -162,11 +167,11 @@ void motorSpeed(int value) {
 }
 
 void motorRotateClockwise() {
-  digitalWrite(motorControl1Pin, LOW);
-  digitalWrite(motorControl2Pin, HIGH);
+  digitalWrite(motorControl1Pin, OFF);
+  digitalWrite(motorControl2Pin, ON);
 }
 
 void motorRotateCounterClockwise() {
-  digitalWrite(motorControl1Pin, HIGH);
-  digitalWrite(motorControl2Pin, LOW);
+  digitalWrite(motorControl1Pin, ON);
+  digitalWrite(motorControl2Pin, OFF);
 }
