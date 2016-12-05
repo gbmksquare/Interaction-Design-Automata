@@ -18,6 +18,8 @@ int heartbeatOffDelay = 0;
 int heartbeatCurrentBrightness = 0;
 int isHeartbeatBrightnessAscending = true;
 
+int currentStep = 0;
+
 // Run loop
 void setup() {
   Serial.begin(9600);
@@ -74,6 +76,17 @@ void handle(String module, int value) {
       turnOnHearbeat();
     } else {
       turnOffHeartbeat();
+    }
+  }
+
+  else if (module == "step") {
+    currentStep = value;
+    if (value > 0) {
+      value = map(value, 0, 3000, 0, 100);
+      value = constrain(value, 0, 100);
+      motorSpeed(value);
+    } else {
+      motorStop();
     }
   }
 }

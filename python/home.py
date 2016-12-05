@@ -128,6 +128,13 @@ class Heartbeat(Resource):
 		else:
 			return {}, 503
 
+class Step(Resource):
+	def get(self, step):
+		if send('step:' + str(step)) == True:
+			return {'Step': step}, 200
+		else:
+			return {}, 503
+
 class Automata(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
@@ -138,7 +145,7 @@ class Automata(Resource):
 		bpm = args['bpm']
 		step = args['step']
 
-		if (send('bpm:' + str(bpm)) == True) and (send('step:' + str(step)) == True):
+		if (send('heartbeat:' + str(bpm)) == True) and (send('step:' + str(step)) == True):
 			return {'Heartbeat': bpm, 'Step': step}, 200
 		else:
 			return {}, 503
@@ -159,6 +166,7 @@ api.add_resource(MotorClockwise, '/motor/cw')
 api.add_resource(MotorCounterClockwise, '/motor/ccw')
 
 api.add_resource(Heartbeat, '/heartbeat/<bpm>')
+api.add_resource(Step, '/step/<step>')
 api.add_resource(Automata, '/automata')
 
 # Start app
