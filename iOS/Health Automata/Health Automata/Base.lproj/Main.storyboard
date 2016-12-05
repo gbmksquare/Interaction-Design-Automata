@@ -192,7 +192,7 @@
         <!--Current-->
         <scene sceneID="Ksm-pS-hU9">
             <objects>
-                <viewController id="R6J-CM-baS" sceneMemberID="viewController">
+                <viewController id="R6J-CM-baS" customClass="StatusViewController" customModule="Health_Automata" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Loi-Od-x5R"/>
                         <viewControllerLayoutGuide type="bottom" id="94D-eW-AcP"/>
@@ -200,9 +200,66 @@
                     <view key="view" contentMode="scaleToFill" id="WhS-si-ptP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="JWa-Fi-Jzw">
+                                <rect key="frame" x="40" y="179.5" width="295" height="309"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZJF-3N-2Yt">
+                                        <rect key="frame" x="0.0" y="0.0" width="295" height="124.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Steps" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygx-b7-KOC">
+                                                <rect key="frame" x="117" y="0.0" width="61" height="29"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMH-K9-umg">
+                                                <rect key="frame" x="123" y="29" width="49" height="95.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="80"/>
+                                                <color key="textColor" red="0.98823529409999999" green="0.30980392159999998" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rca-Lf-WbZ">
+                                        <rect key="frame" x="0.0" y="184.5" width="295" height="124.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BPM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCH-Od-WS8">
+                                                <rect key="frame" x="122.5" y="0.0" width="50" height="29"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h17-Za-af4">
+                                                <rect key="frame" x="123" y="29" width="49" height="95.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="80"/>
+                                                <color key="textColor" red="0.98823529409999999" green="0.30980392159999998" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JWa-Fi-Jzw" firstAttribute="centerX" secondItem="WhS-si-ptP" secondAttribute="centerX" id="dWW-3H-sFR"/>
+                            <constraint firstItem="JWa-Fi-Jzw" firstAttribute="centerY" secondItem="WhS-si-ptP" secondAttribute="centerY" id="gGe-te-khx"/>
+                            <constraint firstAttribute="trailing" secondItem="JWa-Fi-Jzw" secondAttribute="trailing" constant="40" id="lTd-VX-e6d"/>
+                            <constraint firstItem="JWa-Fi-Jzw" firstAttribute="leading" secondItem="WhS-si-ptP" secondAttribute="leading" constant="40" id="p20-gu-Cnl"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Current" id="sqe-2B-N9v"/>
+                    <navigationItem key="navigationItem" title="Current" id="sqe-2B-N9v">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="3VZ-hi-8vu">
+                            <connections>
+                                <action selector="tappedWithRefresh:" destination="R6J-CM-baS" id="hOk-s6-05k"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="bpmLabel" destination="h17-Za-af4" id="ikM-1m-bUl"/>
+                        <outlet property="stepsLabel" destination="yMH-K9-umg" id="NYY-Oc-Pif"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="376-zZ-EWh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
