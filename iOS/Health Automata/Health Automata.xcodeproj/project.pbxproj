@@ -18,6 +18,9 @@
 		16633A5F1DF45E1300BC7355 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A5E1DF45E1300BC7355 /* DebugViewController.swift */; };
 		16633A621DF46C5C00BC7355 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A611DF46C5C00BC7355 /* DateFormatter.swift */; };
 		16633A641DF46C8800BC7355 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16633A631DF46C8800BC7355 /* UIColor.swift */; };
+		16D9C2EB1DF5B05C006AFD86 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D9C2EA1DF5B05C006AFD86 /* HistoryViewController.swift */; };
+		16D9C2ED1DF5B8E9006AFD86 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D9C2EC1DF5B8E9006AFD86 /* HistoryTableViewCell.swift */; };
+		16D9C2EF1DF5C3F2006AFD86 /* HistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D9C2EE1DF5C3F2006AFD86 /* HistoryCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		16633A5E1DF45E1300BC7355 /* DebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		16633A611DF46C5C00BC7355 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		16633A631DF46C8800BC7355 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		16D9C2EA1DF5B05C006AFD86 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		16D9C2EC1DF5B8E9006AFD86 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		16D9C2EE1DF5C3F2006AFD86 /* HistoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,9 @@
 		161458911DF44E91006F24E3 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				16D9C2EA1DF5B05C006AFD86 /* HistoryViewController.swift */,
+				16D9C2EC1DF5B8E9006AFD86 /* HistoryTableViewCell.swift */,
+				16D9C2EE1DF5C3F2006AFD86 /* HistoryCollectionViewCell.swift */,
 				16633A5A1DF45E0300BC7355 /* StepViewController.swift */,
 				16633A5C1DF45E0C00BC7355 /* HeartbeatViewController.swift */,
 				16633A5E1DF45E1300BC7355 /* DebugViewController.swift */,
@@ -217,9 +226,12 @@
 			files = (
 				16633A5B1DF45E0300BC7355 /* StepViewController.swift in Sources */,
 				16633A641DF46C8800BC7355 /* UIColor.swift in Sources */,
+				16D9C2ED1DF5B8E9006AFD86 /* HistoryTableViewCell.swift in Sources */,
 				16633A5D1DF45E0C00BC7355 /* HeartbeatViewController.swift in Sources */,
 				16633A5F1DF45E1300BC7355 /* DebugViewController.swift in Sources */,
+				16D9C2EF1DF5C3F2006AFD86 /* HistoryCollectionViewCell.swift in Sources */,
 				1614587D1DF44E23006F24E3 /* AppDelegate.swift in Sources */,
+				16D9C2EB1DF5B05C006AFD86 /* HistoryViewController.swift in Sources */,
 				16633A621DF46C5C00BC7355 /* DateFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

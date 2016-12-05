@@ -15,7 +15,8 @@ class StepViewController: UITableViewController {
     // MARK: View
     override func viewDidLoad() {
         super.viewDidLoad()
-        getStepCounts()
+//        getStepCounts()
+        getStepStatistics()
     }
     
     // MARK: Health
@@ -51,6 +52,39 @@ class StepViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             })
+            health.execute(query)
+        })
+    }
+    
+    fileprivate func getStepStatistics(limit: Int = HKObjectQueryNoLimit, start: Date? = nil, end: Date? = nil) {
+        guard HKHealthStore.isHealthDataAvailable() else {
+            print("Health store unavailable.")
+            return
+        }
+        
+        guard let stepCountSampleType = HKSampleType.quantityType(forIdentifier: .stepCount) else {
+            print("Step count unavailable.")
+            return
+        }
+        
+        let health = HKHealthStore()
+        
+        health.requestAuthorization(toShare: nil, read: [stepCountSampleType], completion: { [unowned self] (isComplete, error) in
+            guard isComplete == true && error == nil else {
+                print("Unable to get step count data.")
+                return
+            }
+            
+            let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: [])
+            var intervalComponents = DateComponents()
+            intervalComponents.hour = 1
+            let query = HKStatisticsCollectionQuery(quantityType: stepCountSampleType, quantitySamplePredicate: predicate, options: HKStatisticsOptions.cumulativeSum, anchorDate: Date(), intervalComponents: intervalComponents)
+            query.initialResultsHandler = { (query, collection, error) in
+                guard let statistics = collection?.statistics() else { return }
+                for statistic in statistics {
+                    print(statistic.sumQuantity())
+                }
+            }
             health.execute(query)
         })
     }
