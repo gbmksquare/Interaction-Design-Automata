@@ -1,19 +1,35 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import serial
+import time
+
+def openPort():
+	global usb
+	try:
+		usb = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+		time.sleep(2) # Arudino needs time to open the port
+	except:
+		usb = None
 
 app = Flask(__name__)
 api = Api(app)
+
+usb = None
+openPort()
 
 # Arduino
 def send(value):
 	try:
 		data = bytes(value, 'utf-8')
-		usb = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
-		usb.write(data)
-		usb.close()
+		global usb
+		if usb == None:
+			openPort()
+		if usb != None:
+			usb.write(data)
 		return True
 	except:
+		# usb.close()
+		print("Failed to open new port")
 		return False
 
 # Web
