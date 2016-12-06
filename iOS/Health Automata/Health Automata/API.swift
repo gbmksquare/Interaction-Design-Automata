@@ -12,7 +12,7 @@ import Alamofire
 class API {
     class var baseUrl: String {
         let defaults = UserDefaults.standard
-        let url = "http://" + defaults.string(forKey: "baseUrl")! + ":8080"
+        let url = "http://" + defaults.string(forKey: "baseUrl")!
         return url
     }
     
