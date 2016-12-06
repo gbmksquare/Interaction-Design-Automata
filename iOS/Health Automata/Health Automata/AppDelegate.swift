@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     fileprivate func registerPreference() {
         let defaults = UserDefaults.standard
-        defaults.register(defaults: ["baseUrl": "http://192.168.0.45:8080"])
+        defaults.register(defaults: ["baseUrl": "192.168.0.45"])
     }
     
     fileprivate func customizeAppearance() {

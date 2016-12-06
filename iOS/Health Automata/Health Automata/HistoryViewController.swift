@@ -142,7 +142,12 @@ extension HistoryViewController: UICollectionViewDelegateFlowLayout {
 
 extension HistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        guard let cell = tableView.cellForRow(at: indexPath) as? HistoryTableViewCell else { return }
+        guard let steps = cell.stepsLabel.text, let bpm = cell.bpmLabel.text else { return }
+        let formatter = NumberFormatter()
+        if let steps = formatter.number(from: steps)?.intValue, let bpm = formatter.number(from: bpm)?.intValue {
+            API.sendData(steps: steps, bpm: bpm)
+        }
     }
 }
 

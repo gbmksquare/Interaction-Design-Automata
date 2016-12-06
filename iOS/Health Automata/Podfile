@@ -1,0 +1,7 @@
+
+target 'Health Automata' do
+	platform :ios, '10.0'
+ 	use_frameworks!
+
+ 	pod 'Alamofire'
+end

@@ -13,6 +13,23 @@ class StatusViewController: UIViewController {
     @IBOutlet fileprivate weak var stepsLabel: UILabel!
     @IBOutlet fileprivate weak var bpmLabel: UILabel!
     
+    fileprivate var steps: Int = 0 {
+        didSet {
+            DispatchQueue.main.async { [unowned self] in
+                self.stepsLabel.text = "\(self.steps)"
+            }
+        }
+    }
+    fileprivate var bpm: Int = 0 {
+        didSet {
+            DispatchQueue.main.async { [unowned self] in
+                self.bpmLabel.text = "\(self.bpm)"
+            }
+        }
+    }
+    
+    private var dataFetchCount = 0
+    
     // MAKR: View
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +38,14 @@ class StatusViewController: UIViewController {
     }
     
     // MARK: Action
+    private func sendDataIfNeeded() {
+        dataFetchCount += 1
+        if dataFetchCount == 2 {
+            dataFetchCount = 0
+            API.sendData(steps: steps, bpm: bpm)
+        }
+    }
+    
     @IBAction fileprivate func tapped(refresh button: UIBarButtonItem) {
         getStepStatistics()
         getHeartbeatStatistics()
@@ -79,9 +104,8 @@ class StatusViewController: UIViewController {
             query.initialResultsHandler = { (query, collection, error) in
                 let unit = HKUnit(from: "count")
                 let sum = collection?.statistics().first?.sumQuantity()?.doubleValue(for: unit) ?? 0
-                DispatchQueue.main.async {
-                    self.stepsLabel.text = "\(Int(sum))"
-                }
+                self.steps = Int(sum)
+                self.sendDataIfNeeded()
             }
             health.execute(query)
         })
@@ -119,9 +143,8 @@ class StatusViewController: UIViewController {
             query.initialResultsHandler = { (query, collection, error) in
                 let unit = HKUnit(from: "count/min")
                 let average = collection?.statistics().first?.averageQuantity()?.doubleValue(for: unit) ?? 0
-                DispatchQueue.main.async {
-                    self.bpmLabel.text = "\(Int(average))"
-                }
+                self.bpm = Int(average)
+                self.sendDataIfNeeded()
             }
             health.execute(query)
         })
