@@ -26,6 +26,26 @@ class StatusViewController: UIViewController {
         getHeartbeatStatistics()
     }
     
+    @IBAction fileprivate func tapped(settings button: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Connect to Raspberry Pi", message: "Enter local address of Raspberry Pi that is connected to Arduino.", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            let baseUrlTextField = alert.textFields?.first!
+            if let address = baseUrlTextField?.text, address.characters.count > 0 {
+                let defaults = UserDefaults.standard
+                defaults.set(address, forKey: "baseUrl")
+                defaults.synchronize()
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Example: 192.168.0.45"
+            textField.text = UserDefaults.standard.string(forKey: "baseUrl")
+        }
+        present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: Health
     fileprivate func getStepStatistics() {
         guard HKHealthStore.isHealthDataAvailable() else {

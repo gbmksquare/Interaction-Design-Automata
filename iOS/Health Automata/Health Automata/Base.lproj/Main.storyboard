@@ -81,7 +81,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Lj-EJ-aX5" id="PxX-Pv-o61">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ZFu-Y7-1RG">
@@ -250,6 +250,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Current" id="sqe-2B-N9v">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="AVm-Pe-GTu">
+                            <connections>
+                                <action selector="tappedWithSettings:" destination="R6J-CM-baS" id="On3-od-DPG"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="3VZ-hi-8vu">
                             <connections>
                                 <action selector="tappedWithRefresh:" destination="R6J-CM-baS" id="hOk-s6-05k"/>
