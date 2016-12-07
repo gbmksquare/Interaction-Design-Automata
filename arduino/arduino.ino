@@ -9,7 +9,9 @@ const int motorControl2Pin = 7; // Digital
 
 const int defaultBlinkDelay = 300;
 
+bool isMotorRunning = false;
 bool isMotorClockwise = true;
+int motorSpeed = 100;
 
 bool isHeartbeatOn = false;
 bool currentBpm = 0;
@@ -63,11 +65,11 @@ void handle(String module, int value) {
   }
 
   else if (module == "motor") {
-    handleMotorPower(value);
+    handleMotorOnOff(value);
   } else if (module == "motorcw") {
     handleMotorRotation(value);
   } else if (module == "motorspeed") {
-    motorSpeed(value);
+    setMotorSpeed(value);
   } 
 
   else if (module == "heartbeat") {
@@ -84,9 +86,10 @@ void handle(String module, int value) {
     if (value > 0) {
       value = map(value, 0, 3000, 0, 100);
       value = constrain(value, 0, 100);
-      motorSpeed(value);
+      setMotorSpeed(value);
+      startMotor();
     } else {
-      motorStop();
+      stopMotor();
     }
   }
 }
@@ -99,25 +102,19 @@ void handleLedOnOff(int ledPin, int value) {
   }
 }
 
-void handleMotorPower(int value) {
+void handleMotorOnOff(int value) {
   if (value == 1) {
-    if (isMotorClockwise == true) {
-      motorRotateClockwise();  
-    } else {
-      motorRotateCounterClockwise();
-    }
+    startMotor();
   } else if (value == 0) {
-    motorStop();
+    stopMotor();
   }
 }
 
 void handleMotorRotation(int value) {
   if (value == 1) {
-    motorRotateClockwise();
-    isMotorClockwise = true;
+    rotateMotorClockwise();
   } else if (value == 0) {
-    motorRotateCounterClockwise();
-    isMotorClockwise = false;
+    rotateMotorCounterClockwise();
   }
 }
 
@@ -161,25 +158,46 @@ void fadeInOutLed(int ledPin, int transitionDelay) {
 }
 
 // Motor
-void motorStop() {
+void startMotor() {
+  isMotorRunning = true;
+  if (isMotorClockwise == true) {
+    rotateMotorClockwise();
+    setMotorSpeed(motorSpeed);
+  } else {
+    rotateMotorCounterClockwise();
+    setMotorSpeed(motorSpeed);
+  }
+}
+
+void stopMotor() {
+  isMotorRunning = false;
   digitalWrite(motorControl1Pin, OFF);
   digitalWrite(motorControl2Pin, OFF);
 }
 
-void motorSpeed(int value) {
-  value = map(value, 0, 100, 0, 255);
-  value = constrain(value, 0, 255);
-  analogWrite(motorSpeedPin, value);
+void setMotorSpeed(int speed) {
+  motorSpeed = speed;
+  if (isMotorRunning == true) {
+    speed = map(speed, 0, 100, 0, 255);
+    speed = constrain(speed, 0, 255);
+    analogWrite(motorSpeedPin, speed);
+  }
 }
 
-void motorRotateClockwise() {
-  digitalWrite(motorControl1Pin, OFF);
-  digitalWrite(motorControl2Pin, ON);
+void rotateMotorClockwise() {
+  isMotorClockwise = true;
+  if (isMotorRunning == true) {
+    digitalWrite(motorControl1Pin, OFF);
+    digitalWrite(motorControl2Pin, ON);
+  }
 }
 
-void motorRotateCounterClockwise() {
-  digitalWrite(motorControl1Pin, ON);
-  digitalWrite(motorControl2Pin, OFF);
+void rotateMotorCounterClockwise() {
+  isMotorClockwise = false;
+  if (isMotorRunning == true) {
+    digitalWrite(motorControl1Pin, ON);
+    digitalWrite(motorControl2Pin, OFF);
+  }
 }
 
 // Application
