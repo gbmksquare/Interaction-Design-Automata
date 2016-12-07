@@ -14,7 +14,7 @@ bool isMotorClockwise = true;
 int motorSpeed = 100;
 
 bool isHeartbeatOn = false;
-bool currentBpm = 0;
+int currentBpm = 0;
 int heartbeatTransitionDelay = 0;
 int heartbeatOffDelay = 0;
 int heartbeatCurrentBrightness = 0;
@@ -218,20 +218,11 @@ void setHeartbeat(int bpm) {
 
   currentBpm = bpm;
 
-  bpm = bpm / 2;
-  unsigned int millisecondPerMinute = 1 * 60 * 1000;
-  unsigned int millisecondPerBeat = millisecondPerMinute / bpm;
+  double secondPerBeat = 60 / double(bpm);
+  double transitionDelay = secondPerBeat / 512 * 1000 * 5;
 
-  if (bpm >= 100) {
-    double onDelay = millisecondPerBeat / 8 * 7;
-    heartbeatOffDelay = millisecondPerBeat / 8;
-    heartbeatTransitionDelay = ceil(onDelay / (256 * 2));
-    heartbeatTransitionDelay = heartbeatTransitionDelay - 1;
-  } else {
-    double onDelay = millisecondPerBeat / 4 * 3;
-    heartbeatOffDelay = millisecondPerBeat / 4;
-    heartbeatTransitionDelay = ceil(onDelay / (256 * 2));
-  }
+  heartbeatOffDelay = 0;
+  heartbeatTransitionDelay = transitionDelay;=
 }
 
 void asyncHeartbeat() {
@@ -240,14 +231,14 @@ void asyncHeartbeat() {
     if (isHeartbeatBrightnessAscending == true) {
       analogWrite(redLedPin, heartbeatCurrentBrightness);
 
-      heartbeatCurrentBrightness += 1;
-      if (heartbeatCurrentBrightness > 255) {
+      heartbeatCurrentBrightness += 5;
+      if (heartbeatCurrentBrightness >= 255) {
         isHeartbeatBrightnessAscending = false;
       }
     } else {
       analogWrite(redLedPin, heartbeatCurrentBrightness);
 
-      heartbeatCurrentBrightness -= 1;
+      heartbeatCurrentBrightness -= 5;
       if (heartbeatCurrentBrightness < 0) {
         delay(heartbeatOffDelay);
         isHeartbeatBrightnessAscending = true;
