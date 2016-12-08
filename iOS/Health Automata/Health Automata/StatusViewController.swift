@@ -51,6 +51,10 @@ class StatusViewController: UIViewController {
         getHeartbeatStatistics()
     }
     
+    @IBAction fileprivate func tapped(stop button: UIBarButtonItem) {
+        API.sendData(steps: 0, bpm: 0)
+    }
+    
     @IBAction fileprivate func tapped(settings button: UIBarButtonItem) {
         let alert = UIAlertController(title: "Connect to Raspberry Pi", message: "Enter local address of Raspberry Pi that is connected to Arduino.", preferredStyle: .alert)
         let confirm = UIAlertAction(title: "Confirm", style: .default, handler: { _ in
