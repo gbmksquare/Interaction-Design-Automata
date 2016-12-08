@@ -14,6 +14,8 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
 
 ## API
 
+### GET
+
 * `/led/on`: Turn red LED on.
 * `/led/off`: Turn red LED off.
 * `/led/blink/<count>`: Blink red LED ` <count>` times.
@@ -27,6 +29,11 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
 * `/motor/cw`: Rotate motor clockwise.
 * `/motor/ccw`: Rotate motor counter-clockwise.
 * `/heartbeat/<bmp>`: Change pulse of red LED. 0 to stop.
+* `/step/<steps>`: Change rotation speed of motor. 0 to stop.
+
+### POST
+
+* `/automata`: `bpm=<int>&step=<int>` Enter any positive integers to blink LED and rotate motor. Use `bpm=0&step=0` to stop blinking LED and rotate motor.
 
 ## Build
 
