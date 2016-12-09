@@ -145,7 +145,7 @@ class Automata(Resource):
 		bpm = args['bpm']
 		step = args['step']
 
-		if (send('heartbeat:' + str(bpm)) == True) and (send('step:' + str(step)) == True):
+		if send('automata:' + str(bpm) + ',' + str(step)) == True:
 			return {'Heartbeat': bpm, 'Step': step}, 200
 		else:
 			return {}, 503

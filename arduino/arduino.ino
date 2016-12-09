@@ -37,8 +37,17 @@ void loop() {
   if (Serial.available() > 0) {
     String module = Serial.readStringUntil(':');
     Serial.read(); // Skip ':'
-    int value = Serial.readStringUntil('\n').toInt();
-    handle(module, value);
+
+    if (module == "automata") {
+      int value1 = Serial.readStringUntil(',').toInt();
+      Serial.read(); // Skip ','
+      int value2 = Serial.readStringUntil('\n').toInt();
+      handle("heartbeat", value1);
+      handle("step", value2);
+    } else {
+      int value = Serial.readStringUntil('\n').toInt();
+      handle(module, value);
+    }
 
     // Serial.println(module);
     // Serial.println(value);
@@ -87,7 +96,6 @@ void handle(String module, int value) {
       value = constrain(value, 0, 3000);
       value = map(value, 0, 3000, 0, 100);
       value = constrain(value, 0, 100);
-      Serial.println(value);
       startMotor();
       setMotorSpeed(value);
     } else {
