@@ -35,6 +35,7 @@ class HistoryViewController: UIViewController {
         collectionView.dataSource = self
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 49, right: 0)
         getStepStatistics()
         getHeartbeatStatistics()
     }

@@ -84,10 +84,12 @@ void handle(String module, int value) {
   else if (module == "step") {
     currentStep = value;
     if (value > 0) {
+      value = constrain(value, 0, 3000);
       value = map(value, 0, 3000, 0, 100);
       value = constrain(value, 0, 100);
-      setMotorSpeed(value);
+      Serial.println(value);
       startMotor();
+      setMotorSpeed(value);
     } else {
       stopMotor();
     }
@@ -178,8 +180,13 @@ void stopMotor() {
 void setMotorSpeed(int speed) {
   motorSpeed = speed;
   if (isMotorRunning == true) {
-    speed = map(speed, 0, 100, 0, 255);
-    speed = constrain(speed, 0, 255);
+    if (speed >= 100) {
+      speed = 255;
+    } else if (speed <= 0) {
+      speed = 0;
+    } else {
+      speed = map(speed, 1, 99, 51, 255);
+    }
     analogWrite(motorSpeedPin, speed);
   }
 }
@@ -222,7 +229,7 @@ void setHeartbeat(int bpm) {
   double transitionDelay = secondPerBeat / 512 * 1000 * 5;
 
   heartbeatOffDelay = 0;
-  heartbeatTransitionDelay = transitionDelay;=
+  heartbeatTransitionDelay = transitionDelay;
 }
 
 void asyncHeartbeat() {
