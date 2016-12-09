@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -255,11 +256,18 @@
                                 <action selector="tappedWithSettings:" destination="R6J-CM-baS" id="On3-od-DPG"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="3VZ-hi-8vu">
-                            <connections>
-                                <action selector="tappedWithRefresh:" destination="R6J-CM-baS" id="hOk-s6-05k"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="refresh" id="3VZ-hi-8vu">
+                                <connections>
+                                    <action selector="tappedWithRefresh:" destination="R6J-CM-baS" id="hOk-s6-05k"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="stop" id="Vak-He-Nmx">
+                                <connections>
+                                    <action selector="tappedWithStop:" destination="R6J-CM-baS" id="Bec-fH-IlS"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="bpmLabel" destination="h17-Za-af4" id="ikM-1m-bUl"/>
