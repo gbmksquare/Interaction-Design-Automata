@@ -92,10 +92,12 @@ void handle(String module, int value) {
 
   else if (module == "step") {
     currentStep = value;
-    if (value > 0) {
-      value = constrain(value, 0, 3000);
-      value = map(value, 0, 3000, 0, 100);
-      value = constrain(value, 0, 100);
+    if (value >= 1000) {
+      value = 100;
+      startMotor();
+      setMotorSpeed(value);
+    } else if (value > 0) {
+      value = map(value, 1, 999, 30, 99);
       startMotor();
       setMotorSpeed(value);
     } else {
