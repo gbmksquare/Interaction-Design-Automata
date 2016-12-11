@@ -193,7 +193,12 @@ void setMotorSpeed(int speed) {
     } else if (speed <= 0) {
       speed = 0;
     } else {
-      speed = map(speed, 1, 99, 51, 255);
+      speed = map(speed, 1, 99, 1, 254);
+      // Motor doesn't start if initial speed is too low.
+      if (motorSpeed <= 50) {
+        analogWrite(motorSpeedPin, 128);
+        delay(100);
+      }
     }
     analogWrite(motorSpeedPin, speed);
   }
