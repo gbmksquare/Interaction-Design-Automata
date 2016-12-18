@@ -2,6 +2,10 @@
 
 This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in Korea University.
 
+<img src="./images/automata_16.jpg">
+
+For more images, see below.
+
 ## Configuration
 
 * Raspberry Pi 3
@@ -72,6 +76,40 @@ This is a second Arduino project for course ARDE324_00 Fall semeter of 2016 in K
 
 * `ln -s <path_to_project>/homebridge/config.json config.json`
 * `homebridge`
+
+
+
+## Images
+
+<img src="./images/automata_15.jpg">
+
+<img src="./images/automata_14.jpg">
+
+<img src="./images/automata_13.jpg">
+
+<img src="./images/automata_12.jpg">
+
+<img src="./images/automata_11.jpg">
+
+<img src="./images/automata_10.jpg">
+
+<img src="./images/automata_9.jpg">
+
+<img src="./images/automata_8.jpg">
+
+<img src="./images/automata_7.jpg">
+
+<img src="./images/automata_6.jpg">
+
+<img src="./images/automata_5.jpg">
+
+<img src="./images/automata_4.jpg">
+
+<img src="./images/automata_3.jpg">
+
+<img src="./images/automata_2.jpg">
+
+<img src="./images/automata_1.jpg">
 
 ## License
 
