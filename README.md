@@ -111,6 +111,10 @@ For more images, see below.
 
 <img src="./images/automata_1.jpg">
 
+<img src="./images/Mockup-Generated-by-Dunnnk.jpg">
+
+<img src="./images/Mockup-Generated-by-Dunnnk-2.jpg">
+
 ## License
 
 MIT License
